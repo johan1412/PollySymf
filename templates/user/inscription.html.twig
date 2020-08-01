@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+<h1 class="text-center mt-2">Inscription</h1>
+<div class="mt-5 d-flex justify-content-center">
+    {{ form_start(form) }}
+        <div class="form-group">
+            <label>Nouveau login</label>
+            <div>
+                {{ form_widget(form.login) }}
+                <span>
+                    {% if errorLogin is defined %}
+                        <div class="alert alert-danger p-1"> {{ errorLogin }} </div>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        </br>
+        <div class="form-group">
+            <label>Nouveau mot de passe</label>
+            <div>{{ form_widget(form.password) }}</div>
+        </div>
+        </br>
+        <button class="btn btn-secondary" type="submit">Valider</button>
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}

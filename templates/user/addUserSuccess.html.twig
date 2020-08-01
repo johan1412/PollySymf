@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+<div class="d-flex flex-column justify-content-center col-4 offset-4">
+    <div class="alert alert-success text-center" style="margin-top:10%;" role="alert">
+    Vous avez été ajouté avec succès !
+    </div>
+    <a href=" {{ path('pollList') }} " class="d-flex justify-content-center" style="margin-top:20px;"><button class="btn btn-secondary">Revenir à la page principale</button></a>
+</div>
+
+{% endblock %}

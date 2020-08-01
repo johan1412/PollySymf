@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+<div class="row" style="margin-top:10px;">
+    <p>Bonjour {{ pseudo }} !</p>
+</div>
+<div class="row">
+    <a href=" {{ path('new_poll') }}"><button class="btn btn-secondary mt-5">créer un sondage <i class="fa fa-plus ml-2"></i></button></a>
+</div>
+</br></br>
+<h1 class="text-center">Liste des sondages disponibles</h1>
+<br></br>
+<div class="container">
+    <table class="table col-10 offset-1">
+        <thead class="thead-light">
+            <tr>
+                <th>Question</th>
+                <th>Créer par</th>
+                <th>Date de création</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sondage in sondages %}
+                <tr>
+                    <td>{{ sondage.question }}</td>
+                    <td>{{ sondage.pseudo }}</td>
+                    <td>{{ sondage.date }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

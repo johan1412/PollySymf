@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1 class="text-typing mt-5">Bienvenue sur PollySymf</h1>
+    <div class="center-center">
+        <div class="container text-center">
+            <p class="pb-5">Créer votre propre sondage en ligne, custumizez le puis partager le grâce à un simple url.</br>
+                Ou bien repondez à une liste de sondages disponible et comparez vos réponses par rapport à celles des autres.
+            </p>
+            {{ form_start(form) }}
+                <label for="pseudo" class="mr-2">Votre pseudo de session : </label>
+                {{ form_widget(form.pseudo, {'attr': {'class': 'border'}}) }}
+                <button type="submit" class="btn btn-secondary">commencer</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
