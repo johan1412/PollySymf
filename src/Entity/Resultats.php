@@ -52,7 +52,7 @@ class Resultats
         return $this->res1;
     }
 
-    public function setRes1(string $res1): self
+    public function setRes1(int $res1): self
     {
         $this->res1 = $res1;
 

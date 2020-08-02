@@ -9,7 +9,7 @@
             <label>Nouveau login</label>
             <div>
                 {{ form_widget(form.login) }}
-                <span>
+                <span class="mt-1">
                     {% if errorLogin is defined %}
                         <div class="alert alert-danger p-1"> {{ errorLogin }} </div>
                     {% endif %}
