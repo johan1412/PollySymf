@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user_inscription", name="user_inscription")
+     * @Route("/user/user_inscription", name="user_inscription")
      */
     public function inscription(Request $request)
     {

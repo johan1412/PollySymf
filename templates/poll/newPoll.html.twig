@@ -3,42 +3,57 @@
 {% block content %}
 
 <h1 class="text-center mt-2">Création d'un sondage</h1>
-<div class="mt-5 mb-5 col-6 offset-3">
+<div class="mt-5 mb-5 col-6 offset-3" style="font-size:110%;">
     {{ form_start(form) }}
         <div class="form-group">
             <label>Question</label>
             <div>{{ form_widget(form.question) }}</div>
         </div>
-
-        </br>
+        </br><hr></br>
         <div class="form-group">
             <label>Sondage public ?</label>
             <div><span>oui </span>{{ form_widget(form.public) }}</div>
         </div>
-
-        </br>
+        </br><hr></br>
         <div class="form-group">
-            <label>option 1</label>
+            <label>choix 1</label>
             <div>{{ form_widget(form.option1) }}</div>
         </div>
+
         <div class="form-group">
-            <label>option 2</label>
+            <label>choix 2</label>
             <div>{{ form_widget(form.option2) }}</div>
         </div>
-        <div class="form-group">
-            <label>option 3</label>
+        
+        <div id="choix3" class="form-group">
+            <label>choix 3</label>
             <div>{{ form_widget(form.option3) }}</div>
         </div>
-        <div class="form-group">
-            <label>option 4</label>
+
+        <div id="choix4" class="form-group">
+            <label>choix 4</label>
             <div>{{ form_widget(form.option4) }}</div>
         </div>
-        <div class="form-group">
-            <label>option 5</label>
+
+        <div id="choix5" class="form-group">
+            <label>choix 5</label>
             <div>{{ form_widget(form.option5) }}</div>
         </div>
 
-        <button class="btn bg-info" type="submit">Valider</button>
+        <div class="form-group">
+            <span id="addchoice3" class="btn" style="border:1px solid #222222;">ajouter un choix <i class="fa fa-plus"></i></span>
+        </div>
+
+        <div class="form-group">
+            <span id="addchoice4" class="btn" style="border:1px solid #222222;">ajouter un choix <i class="fa fa-plus"></i></span>
+        </div>
+
+        <div class="form-group">
+            <span id="addchoice5" class="btn" style="border:1px solid #222222;">ajouter un choix <i class="fa fa-plus"></i></span>
+        </div>
+
+        </br><hr></br>
+        <button class="btn bg-info mt-3" type="submit">Valider</button>
     {{ form_end(form) }}
 </div>
 

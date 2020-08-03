@@ -45,3 +45,12 @@ body {
 .border {
     border: 1px solid black !important;
 }
+
+hr {
+    margin: 0px !important;
+}
+
+.radioButton {
+    width: 17px;
+    height: 17px;
+}

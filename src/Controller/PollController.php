@@ -7,7 +7,7 @@ use App\Entity\Poll;
 use App\Entity\Resultats;
 use App\Form\PollType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -16,11 +16,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class PollController extends AbstractController
 {
     /**
-     * @Route("/pollList", name="pollList")
+     * @Route("/poll/pollList", name="pollList")
      */
     public function index(SessionInterface $session)
     {
         $pseudo = $session->get('pseudo');
+        if(!$pseudo) {
+            return $this->redirectToRoute('home');
+        }
         $poll = $this->getDoctrine()
             ->getRepository(Poll::class)
             ->findPublic();
@@ -33,9 +36,75 @@ class PollController extends AbstractController
 
 
     /**
-     * @Route("/newPoll", name="new_poll")
+     * @Route("/poll/show/{url}", name="show_poll")
+     */
+    public function showPoll(Request $request, $url) {
+        $em = $this->getDoctrine()->getManager();
+        $poll = $em->getRepository(Poll::class)->findOneBy([
+            'url' => $url,
+        ]);
+        $defaultData = [];
+        $choix = $em->getRepository(Choix::class)->find($poll->getChoix());
+        $res = $em->getRepository(Resultats::class)->find($poll->getResultats());
+        $form = $this->createFormBuilder($defaultData)
+            ->add('choix', ChoiceType::class, [
+                'choices' => [
+                    $choix->getOption1() => $choix->getOption1(),
+                    $choix->getOption2() => $choix->getOption2(),
+                    $choix->getOption3() == null ? "null" : $choix->getOption3() => $choix->getOption3(),
+                    $choix->getOption4() == null ? "null" : $choix->getOption3() => $choix->getOption4(),
+                    $choix->getOption5() == null ? "null" : $choix->getOption3() => $choix->getOption5(),
+                ],
+                'expanded' => true,
+                'multiple' => false,
+                'required' => true,
+                'choice_attr' => function() {
+                    return ['class' => 'ml-5 mr-1'];
+                },
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            if($data['choix'] == $choix->getOption1()) {
+                $count1 = $res->getRes1();
+                $res->setRes1($count1 + 1);
+            } elseif($data['choix'] == $choix->getOption2()) {
+                $count2 = $res->getRes2();
+                $res->setRes2($count2 + 1);
+            } elseif($data['choix'] == $choix->getOption3()) {
+                $count3 = $res->getRes3();
+                $res->setRes3($count3 + 1);
+            } elseif($data['choix'] == $choix->getOption4()) {
+                $count4 = $res->getRes4();
+                $res->setRes4($count4 + 1);
+            } elseif($data['choix'] == $choix->getOption5()) {
+                $count5 = $res->getRes5();
+                $res->setRes5($count5 + 1);
+            }
+            $em->flush();
+            $this->addFlash('success', 'Votre vote a bien été prit en compte');
+            return $this->redirectToRoute('pollList');
+        }
+
+        $tabRes = [$res->getRes1(), $res->getRes2(), $res->getRes3(), $res->getRes4(), $res->getRes5()];
+        return $this->render('poll/show.html.twig', [
+            'poll' => $poll,
+            'form' => $form->createView(),
+            'res' => $tabRes,
+        ]);
+    }
+
+
+    /**
+     * @Route("/poll/new", name="new_poll")
      */
     public function newPoll(Request $request, SessionInterface $session) {
+        $pseudo = $session->get('pseudo');
+        if(!$pseudo) {
+            return $this->redirectToRoute('home');
+        }
         $defaultData = [];
         $formPoll = $this->createForm(PollType::class, $defaultData);
         $poll = new Poll();
@@ -72,7 +141,9 @@ class PollController extends AbstractController
             $em->persist($poll);
             $em->persist($choix);
             $em->flush();
-            return $this->render('poll/addPollSuccess.html.twig');
+            return $this->render('poll/addPollSuccess.html.twig', [
+                'url' => $poll->getUrl(),
+            ]);
         }
     
         return $this->render('poll/newPoll.html.twig', [

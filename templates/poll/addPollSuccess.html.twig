@@ -6,6 +6,7 @@
     <div class="alert alert-success text-center" style="margin-top:10%;" role="alert">
     Le sondage a été ajouté avec succès !
     </div>
+    <div class="text-center">Voici le lien du sondage : <a href="{{ path('show_poll', {'url': url}) }}">{{ path('show_poll', {'url': url}) }}</a></div>
     <a href=" {{ path('pollList') }} " class="d-flex justify-content-center" style="margin-top:20px;"><button class="btn btn-secondary">Revenir à la page principale</button></a>
 </div>
 
