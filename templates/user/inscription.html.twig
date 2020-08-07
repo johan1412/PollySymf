@@ -7,22 +7,29 @@
     {{ form_start(form) }}
         <div class="form-group">
             <label>Nouveau login</label>
+            {{ form_errors(form.login) }}
             <div>
-                {{ form_widget(form.login) }}
-                <span class="mt-1">
-                    {% if errorLogin is defined %}
-                        <div class="alert alert-danger p-1"> {{ errorLogin }} </div>
-                    {% endif %}
-                </span>
+                {{ form_widget(form.login, {'attr': {'placeholder': 'login'}}) }}
             </div>
         </div>
         </br>
         <div class="form-group">
             <label>Nouveau mot de passe</label>
-            <div>{{ form_widget(form.password) }}</div>
+            {{ form_errors(form.password) }}
+            <div>
+                {{ form_widget(form.password, {'attr': {'placeholder': 'mot de passe'}}) }}
+            </div>
         </div>
         </br>
-        <button class="btn btn-secondary" type="submit">Valider</button>
+        <div class="form-group">
+            <label>Répéter le mot de passe</label>
+            {{ form_errors(form.confirm_password) }}
+            <div>
+                {{ form_widget(form.confirm_password, {'attr': {'placeholder': 'mot de passe'}}) }}
+            </div>
+        </div>
+        </br>
+        <button class="btn btn-info" type="submit">Valider</button>
     {{ form_end(form) }}
 </div>
 

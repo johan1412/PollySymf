@@ -17,7 +17,7 @@
                             {{ form_label(child) }}
                         </div>
                     {% else %}
-                        <div class="form-group" style="font-size:120%;">
+                        <div class="form-group row" style="font-size:120%;">
                             {{ form_widget(child, {'attr': {'class': 'radioButton'}}) }}
                             {{ form_label(child) }}
                             <span class="ml-2">({{ res[i] }} votes)</span>

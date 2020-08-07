@@ -6,6 +6,8 @@ use App\Entity\Choix;
 use App\Entity\Poll;
 use App\Entity\Resultats;
 use App\Form\PollType;
+use App\Repository\PollRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -100,7 +102,7 @@ class PollController extends AbstractController
     /**
      * @Route("/poll/new", name="new_poll")
      */
-    public function newPoll(Request $request, SessionInterface $session) {
+    public function newPoll(Request $request, SessionInterface $session, PollRepository $pollRepo) {
         $pseudo = $session->get('pseudo');
         if(!$pseudo) {
             return $this->redirectToRoute('home');
@@ -130,7 +132,10 @@ class PollController extends AbstractController
             $poll->setQuestion($data['question']);
             $poll->setPublic($data['public']);
             $poll->setDatetime(new \DateTime('now'));
-            $url = substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',2)),0,10);
+            $url = "";
+            while(($pollRepo->findOneBy(['url' => $url])) || ($url == "")) {
+                $url = substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',2)),0,10);
+            }
             $poll->setUrl($url);
             $pseudo = $session->get('pseudo');
             $poll->setPseudo($pseudo);

@@ -9,7 +9,13 @@
     </head>
     <body>
         {% include('header.html.twig') %}
-        <div class="container" style="width:100vw; min-height:600px;">
+        </br>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="container" style="width:100vw; min-height:600px; margin-bottom:80px;">
             {% block body %}
                 {% block content %}{% endblock %}
             {% endblock %}
